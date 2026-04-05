@@ -22,3 +22,7 @@ python3 create_website.py -n 100
 - `-t`, `--title`: The title of the `index.html` page (default: "Linkinator Test").
 
 The generated website will be located in the `dist/` directory.
+
+## Live Demo
+
+A live version of the generated website can be found at [https://linkinator-test.debablo.de/](https://linkinator-test.debablo.de/).
