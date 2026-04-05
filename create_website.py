@@ -4,10 +4,12 @@ import os
 import sys
 import shutil
 
+defaultDescription = "This is a test scrape website for linkinator to test the <a href='https://github.com/JustinBeckwith/linkinator/issues/534'>rate limit handling issue</a>."
+
 def main():
     parser = argparse.ArgumentParser(description="Generate a simple website with a list of links.")
     parser.add_argument("-c", "--pages-content", default="hi", help="The content of the numbered html files (default: hi)")
-    parser.add_argument("-d", "--description", help="HTML content to be displayed above the list in index.html")
+    parser.add_argument("-d", "--description", default=defaultDescription,help="HTML content to be displayed above the list in index.html")
     parser.add_argument("-n", "--page-number", type=int, required=True, help="The number of numbered html pages to be generated")
     parser.add_argument("-t", "--title", default="linkinator test", help="The title of the index.html page (default: linkinator test)")
 
