@@ -1,6 +1,8 @@
+from pathlib import Path
 import argparse
 import os
 import sys
+import shutil
 
 def main():
     parser = argparse.ArgumentParser(description="Generate a simple website with a list of links.")
@@ -12,20 +14,23 @@ def main():
     args = parser.parse_args()
 
     # Create directories
-    dist_dir = "dist"
-    pages_dir = os.path.join(dist_dir, "pages")
-
-    os.makedirs(pages_dir, exist_ok=True)
+    dist_dir = (Path(__file__).parent / "dist").resolve()
+    # Remove existing dist directory if it exists
+    if dist_dir.exists():
+        shutil.rmtree(str(dist_dir))
+    dist_dir.mkdir(exist_ok=True)
+    pages_dir = dist_dir / "pages"
+    pages_dir.mkdir(exist_ok=True)
 
     # Generate numbered pages
     for i in range(1, args.page_number + 1):
         page_filename = f"{i}.html"
-        page_path = os.path.join(pages_dir, page_filename)
+        page_path = pages_dir / page_filename
         with open(page_path, "w", encoding="utf-8") as f:
             f.write(args.pages_content)
 
     # Generate index.html
-    index_path = os.path.join(dist_dir, "index.html")
+    index_path = dist_dir / "index.html"
 
     links_html = "\n".join([f'        <li><a href="pages/{i}.html">Page {i}</a></li>' for i in range(1, args.page_number + 1)])
 
