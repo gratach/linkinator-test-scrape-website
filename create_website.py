@@ -1,0 +1,55 @@
+import argparse
+import os
+import sys
+
+def main():
+    parser = argparse.ArgumentParser(description="Generate a simple website with a list of links.")
+    parser.add_argument("-c", "--pages-content", default="hi", help="The content of the numbered html files (default: hi)")
+    parser.add_argument("-d", "--description", help="HTML content to be displayed above the list in index.html")
+    parser.add_argument("-n", "--page-number", type=int, required=True, help="The number of numbered html pages to be generated")
+    parser.add_argument("-t", "--title", default="linkinator test", help="The title of the index.html page (default: linkinator test)")
+
+    args = parser.parse_args()
+
+    # Create directories
+    dist_dir = "dist"
+    pages_dir = os.path.join(dist_dir, "pages")
+
+    os.makedirs(pages_dir, exist_ok=True)
+
+    # Generate numbered pages
+    for i in range(1, args.page_number + 1):
+        page_filename = f"{i}.html"
+        page_path = os.path.join(pages_dir, page_filename)
+        with open(page_path, "w", encoding="utf-8") as f:
+            f.write(args.pages_content)
+
+    # Generate index.html
+    index_path = os.path.join(dist_dir, "index.html")
+
+    links_html = "\n".join([f'        <li><a href="pages/{i}.html">Page {i}</a></li>' for i in range(1, args.page_number + 1)])
+
+    description_html = f"    <div>{args.description}</div>" if args.description else ""
+
+    index_content = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{args.title}</title>
+</head>
+<body>
+    <h1>{args.title}</h1>
+{description_html}
+    <ul>
+{links_html}
+    </ul>
+</body>
+</html>
+"""
+    with open(index_path, "w", encoding="utf-8") as f:
+        f.write(index_content)
+
+    print(f"Website generated in {dist_dir}/")
+
+if __name__ == "__main__":
+    main()
