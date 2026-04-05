@@ -19,6 +19,6 @@ python3 create_website.py -n 100
 - `-n`, `--page-number`: (Required) The number of numbered HTML pages to be generated.
 - `-c`, `--pages-content`: The content of the numbered HTML files (default: "hi").
 - `-d`, `--description`: HTML content to be displayed above the list in `index.html`.
-- `-t`, `--title`: The title of the `index.html` page (default: "linkinator test").
+- `-t`, `--title`: The title of the `index.html` page (default: "Linkinator Test").
 
 The generated website will be located in the `dist/` directory.
